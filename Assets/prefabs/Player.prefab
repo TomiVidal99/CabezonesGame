@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 134533915889943829}
   - component: {fileID: 2437258921954578784}
   - component: {fileID: 2381558540645622782}
+  - component: {fileID: 1783493776134242154}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -84,6 +85,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1783493776134242154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350094920254375216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f294275f68d1ff48b5c9937ae773695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5472944668200379278
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,11 +194,11 @@ GameObject:
   - component: {fileID: 6813655226816376271}
   m_Layer: 0
   m_Name: BoundingBox
-  m_TagString: Untagged
+  m_TagString: HittingBoundingBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7142809553104064109
 Transform:
   m_ObjectHideFlags: 0

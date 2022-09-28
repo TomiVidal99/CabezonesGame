@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ball
+  - HittingBoundingBox
+  - PlayerBody
+  - PlayerHand
+  - PlayerHead
+  - Ground
   layers:
   - Default
   - TransparentFX
