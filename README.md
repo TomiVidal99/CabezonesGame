@@ -8,6 +8,10 @@ Just a simple game made with Unity and C#, to learn in depth both of these techn
 
 The game it's about scoring a goal to the other player (the it's two player based and it's required to be played in the same keyboard), when the time's up the player with the most scored goals wins, if both players have the same score then it's a golden goal match.
 
+## TODO
+
+- [ ] pause game and reset ball position when the ball it's still for a while.
+
 ## Getting Started
 
 ### Dependencies

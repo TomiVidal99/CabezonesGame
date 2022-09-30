@@ -12,6 +12,9 @@ TagManager:
   - Ground
   - AbilitiesDisplay
   - HUD
+  - Score
+  - Pole Goal Right
+  - Pole Goal Left
   layers:
   - Default
   - TransparentFX

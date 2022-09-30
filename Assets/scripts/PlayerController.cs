@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-  [SerializeField] HUDController _hud;
+  HUDController _hud;
   Rigidbody2D _playerRB;
   float _playerSpeed = 15f;
   float _jumpSpeed = 1000f;
 
-  int _abilitySelector = 0;
+  //int _abilitySelector = 0; TODO
 
   float _inputHorizontal;
   float _inputVertical;
