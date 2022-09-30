@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+  [SerializeField] HUDController _hud;
   Rigidbody2D _playerRB;
   float _playerSpeed = 15f;
   float _jumpSpeed = 1000f;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
   void Start()
   {
+    _hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDController>();
     _playerRB = gameObject.GetComponent<Rigidbody2D>();
   }
 
@@ -57,19 +59,21 @@ public class PlayerController : MonoBehaviour
          ability2 = Input.GetKeyDown(KeyCode.Alpha2),
          ability3 = Input.GetKeyDown(KeyCode.Alpha3);
     if (ability1)
+    {
       _jumpSpeed = 1000f;
+      _hud.UpdateAbility("1");
+    }
     if (ability2)
+    {
+      _hud.UpdateAbility("2");
       _jumpSpeed = 1400f;
+    }
     if (ability3)
+    {
+      _hud.UpdateAbility("3");
       _jumpSpeed = 1800f;
+    }
   }
-
-  // sets the max velocity of movement, mass, etc.
-  // TODO
-  //void SetPlayerCharacteristics()
-  //{
-
-  //}
 
   void OnCollisionEnter2D(Collision2D collision)
   {
@@ -78,7 +82,6 @@ public class PlayerController : MonoBehaviour
     {
       _isGrounded = true;
     }
-
   }
 
 }
