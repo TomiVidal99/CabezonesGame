@@ -10,8 +10,6 @@ public class PlayerController : MonoBehaviour
   float _playerSpeed = 15f;
   float _jumpSpeed = 1000f;
 
-  //int _abilitySelector = 0; TODO
-
   float _inputHorizontal;
   float _inputVertical;
 
@@ -29,6 +27,7 @@ public class PlayerController : MonoBehaviour
     HandleAbilities();
   }
 
+  // Controls the movement of the character
   void HandleMovement()
   {
     // handle move left and right
@@ -53,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
   }
 
+  // controls the current selected ability of the player
   void HandleAbilities()
   {
     bool ability1 = Input.GetKeyDown(KeyCode.Alpha1),
@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
     }
   }
 
+  // detect if the player it's touching the ground
   void OnCollisionEnter2D(Collision2D collision)
   {
     //Debug.Log("collitions " + collision.gameObject.tag);
