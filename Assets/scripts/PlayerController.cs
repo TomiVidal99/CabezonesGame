@@ -75,6 +75,13 @@ public class PlayerController : MonoBehaviour
     }
   }
 
+  // resets the position
+  public void ResetPosition()
+  {
+    // TODO check this when making the MP
+    gameObject.transform.position = new Vector2(0, 0);
+  }
+
   // detect if the player it's touching the ground
   void OnCollisionEnter2D(Collision2D collision)
   {

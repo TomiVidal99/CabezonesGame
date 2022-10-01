@@ -9,6 +9,8 @@ public class Main : MonoBehaviour
   [SerializeField] GameObject _player;
   [SerializeField] GameObject _world;
 
+  PlayerController _player1;
+
   // Start is called before the first frame update
   void Start()
   {
@@ -19,6 +21,11 @@ public class Main : MonoBehaviour
   void Update()
   {
 
+  }
+
+  void GetPlayers()
+  {
+    _player1 = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
   }
 
   // initiazes the world, with the scenerio, the player and the ball
@@ -34,7 +41,16 @@ public class Main : MonoBehaviour
     //Instantiate(_ball, ballInitialPos, Quaternion.identity);
 
     // create player
-    //TODO
-    //Instantiate(_player, playerIntialPos, Quaternion.identity);
+    Instantiate(_player, playerIntialPos, Quaternion.identity);
+    
+    // sets the variables of the players
+    GetPlayers();
   }
+
+  // reset the position of the player when theres a score
+  public void ResetPlayersPositions()
+  {
+    _player1.ResetPosition();
+  }
+
 }

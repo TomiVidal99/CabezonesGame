@@ -15,6 +15,7 @@ TagManager:
   - Score
   - Pole Goal Right
   - Pole Goal Left
+  - GlobalInformation
   layers:
   - Default
   - TransparentFX

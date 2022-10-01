@@ -10,7 +10,12 @@ The game it's about scoring a goal to the other player (the it's two player base
 
 ## TODO
 
-- [ ] pause game and reset ball position when the ball it's still for a while.
+- [ ] Add different types of balls (baseball, hockey, rugby).
+- [ ] Add two hitting modes: Hand and Feet. (When setting different playing modes or maps could enable/disable one or the other).
+- [ ] Pause game and reset ball position when the ball it's still for a while.
+- [ ] Make animation when the user scores.
+- [ ] Setup powerups and abilities.
+- [ ] Make the multiplayer.
 
 ## Getting Started
 
