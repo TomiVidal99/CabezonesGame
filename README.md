@@ -10,6 +10,7 @@ The game it's about scoring a goal to the other player (the it's two player base
 
 ## TODO
 
+- [ ] Improve animation handling in the HUD (be able to change the delay for different events).
 - [ ] Add different types of balls (baseball, hockey, rugby).
 - [ ] Add two hitting modes: Hand and Feet. (When setting different playing modes or maps could enable/disable one or the other).
 - [ ] Pause game and reset ball position when the ball it's still for a while.

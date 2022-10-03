@@ -17,7 +17,7 @@ public class HUDController : MonoBehaviour
   DateTime _informationTimeSpan;
   bool _updatedGlobalInformationRecently = false;
 
-  const int _GlobalInformationUpdateSeconds = 2;
+  const int _globalInformationUpdateSeconds = 1;
 
   void Start()
   {
@@ -39,10 +39,17 @@ public class HUDController : MonoBehaviour
     }
   }
 
+  public void ResetScore()
+  {
+    _scoreLeft = 0;
+    _scoreRight = 0;
+    SetUpScore();
+    SetGlobalInformation("Game Restart!");
+  }
+
   void UpdateHUDTextAbility()
   {
     _abilityComponent.text = _currentAbility;
-
   }
 
   // updates the current used ability
@@ -91,7 +98,7 @@ public class HUDController : MonoBehaviour
   void UpdateGlobalInformation()
   {
     TimeSpan timeDiff = DateTime.Now -_informationTimeSpan;
-    if (timeDiff.Seconds > _GlobalInformationUpdateSeconds)
+    if (timeDiff.Seconds > _globalInformationUpdateSeconds)
     {
       _updatedGlobalInformationRecently = true;
       _globalInformation.text = "";

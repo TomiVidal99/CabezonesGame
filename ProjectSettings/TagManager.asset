@@ -16,6 +16,9 @@ TagManager:
   - Pole Goal Right
   - Pole Goal Left
   - GlobalInformation
+  - Main
+  - KickOrigin
+  - Eye
   layers:
   - Default
   - TransparentFX
