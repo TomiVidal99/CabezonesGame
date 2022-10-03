@@ -62,14 +62,6 @@ public class Ball : MonoBehaviour
     return gameObject.transform.lossyScale.x/2;
   }
 
-  // returns the position of the "feet"
-  public Vector3 GetFeetPosition()
-  {
-    Vector3 currentFeetPosition = transform.position - gameObject.GetComponentsInChildren<Transform>()[4].position;
-    Debug.Log($"FEET: ({currentFeetPosition.x}, {currentFeetPosition.y})");
-    return currentFeetPosition;
-  }
-
   // applies a force to the ball
   public void ApplyHit(Vector3 force)
   {

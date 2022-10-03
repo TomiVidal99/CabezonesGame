@@ -10,8 +10,8 @@ public class HUDController : MonoBehaviour
 
   TMP_Text _globalInformation;
   TMP_Text _scoreDisplay;
-  TMP_Text _abilityComponent;
-  string _currentAbility = "1";
+  TMP_Text _player1Cooldown;
+  string _player1CurrentCooldown = "0";
   int _scoreLeft = 0;
   int _scoreRight = 0;
   DateTime _informationTimeSpan;
@@ -23,7 +23,7 @@ public class HUDController : MonoBehaviour
   {
     // get the components
     _globalInformation = GameObject.FindGameObjectWithTag("GlobalInformation").GetComponent<TMP_Text>();
-    _abilityComponent = GameObject.FindGameObjectWithTag("AbilitiesDisplay").GetComponent<TMP_Text>();
+    _player1Cooldown = GameObject.FindGameObjectWithTag("AbilitiesDisplay").GetComponent<TMP_Text>();
     _scoreDisplay = GameObject.FindGameObjectWithTag("Score").GetComponent<TMP_Text>();
 
     // initial values
@@ -44,20 +44,20 @@ public class HUDController : MonoBehaviour
     _scoreLeft = 0;
     _scoreRight = 0;
     SetUpScore();
-    SetGlobalInformation("Game Restart!");
+    SetGlobalInformation("Game Restarted!");
   }
 
-  void UpdateHUDTextAbility()
+  void SetKickCooldown()
   {
-    _abilityComponent.text = _currentAbility;
+    _player1Cooldown.text = _player1CurrentCooldown;
   }
 
   // updates the current used ability
-  public void UpdateAbility(string ability)
+  // TODO: should select the corret HUD for the current player
+  public void UpdateKickCooldown(string cooldown, string player)
   {
-    //Debug.Log($"Updating ability: {ability}");
-    _currentAbility = ability;
-    UpdateHUDTextAbility();
+    _player1CurrentCooldown = cooldown;
+    SetKickCooldown();
   }
 
   // recieves the new score

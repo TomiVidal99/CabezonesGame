@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
   Ball _ball;
   Debugger _debugger;
 
-  [SerializeField] float _kickingForce = 70f;
-  float _playerSpeed = 15f;
-  float _jumpSpeed = 1000f;
+  float _kickingForce = 10f;
+  float _playerSpeed = 7f;
+  float _jumpSpeed = 800f;
 
   bool facingRight = true;
 
@@ -24,9 +24,9 @@ public class PlayerController : MonoBehaviour
 
   bool _isGrounded = false;
 
-  bool _canKick = false;
+  bool _canKick = true;
   DateTime _kickedTime;
-  float _kickCoolDownSeconds = 0.1f;
+  float _kickCoolDownSeconds = 2f;
 
   void Start()
   {
@@ -42,11 +42,20 @@ public class PlayerController : MonoBehaviour
     UpdateMousePosition(); // get the current position of the mouse
     HandleMovementInput(); // gets the keys currently press
     HandleMovement(); // updates the player movement based on the key pressed
-    HandleAbilities(); // updates the currently selected ability based on the key pressed
 
     HandleKicking(); // check if the player can kick and if so applies the force, else just wait the kick cooldown
 
     UpdateFacingSide();
+
+    UpdateKickCooldownHUD();
+  }
+
+  void UpdateKickCooldownHUD()
+  {
+    double cooldown = (_kickCoolDownSeconds - (DateTime.Now - _kickedTime).Seconds);
+    // only update if the time it's less than the _kickCoolDownSeconds
+    if (cooldown >= 0)
+      _hud.UpdateKickCooldown(cooldown.ToString("0") + "s", "");
   }
 
   // updates the position of the mouse based on unity meassuring system;
@@ -83,35 +92,12 @@ public class PlayerController : MonoBehaviour
     }
   }
 
-  // controls the current selected ability of the player
-  void HandleAbilities()
-  {
-    bool ability1 = Input.GetKeyDown(KeyCode.Alpha1),
-         ability2 = Input.GetKeyDown(KeyCode.Alpha2),
-         ability3 = Input.GetKeyDown(KeyCode.Alpha3);
-    if (ability1)
-    {
-      _jumpSpeed = 1000f;
-      _hud.UpdateAbility("1");
-    }
-    if (ability2)
-    {
-      _hud.UpdateAbility("2");
-      _jumpSpeed = 1400f;
-    }
-    if (ability3)
-    {
-      _hud.UpdateAbility("3");
-      _jumpSpeed = 1800f;
-    }
-  }
-
   // sets whether should be facing left or right based on the mouse position
   void UpdateFacingSide()
   {
     Vector3 facingPos = GetFacingDirection();
     // Debug.Log($"({facingPos.x}, {facingPos.y})");
-    if (facingPos.x > 0 && facingRight || facingPos.x < 0 && !facingRight)
+    if (facingPos.x < 0 && facingRight || facingPos.x > 0 && !facingRight)
     {
       facingRight = !facingRight;
       gameObject.transform.RotateAround(transform.position, transform.up, 180f);
@@ -119,15 +105,15 @@ public class PlayerController : MonoBehaviour
 
     // updates the eyes positions
     float eyeAngle = Mathf.Atan(facingPos.normalized.y / facingPos.normalized.x);
-    GameObject.FindGameObjectWithTag("Eye").transform.Rotate(new Vector3(0, 0, eyeAngle), Space.Self);
-
+    GameObject.FindGameObjectWithTag("Eye").transform.rotation = Quaternion.Euler(0f, 0f, facingRight ? eyeAngle * Mathf.Rad2Deg : eyeAngle * Mathf.Rad2Deg - 180f);
   }
 
   // returns where the player it's facing based on the mouse input
   public Vector3 GetFacingDirection()
   {
-    _debugger.DisplayVector(new Vector3(0,0,0), new Vector3(5, 5, 0));
-    return gameObject.transform.position - _mousePosition;
+    Vector3 facingPos = _mousePosition - gameObject.transform.position;
+    _debugger.DisplayVector(Vector3.zero, facingPos.normalized, Color.red);
+    return facingPos;
   }
 
   // resets the position
@@ -138,6 +124,14 @@ public class PlayerController : MonoBehaviour
     gameObject.transform.position = player1InitPos;
   }
 
+  // returns the position of the "feet"
+  Vector3 GetFeetPosition()
+  {
+    GameObject feet = GameObject.Find("KickOrigin");
+    Transform feetTransform =  feet.transform;
+    return feetTransform.position;
+  }
+
   // checks if the player it's pressing the kicking key and applies the force to the ball
   // TODO: optimize this calculating the magnitude before and only run it if the distance it's at a certain minimun
   void HandleKicking()
@@ -145,16 +139,16 @@ public class PlayerController : MonoBehaviour
     if (_hitKey)
     {
       Vector3 ballPosition = _ball.GetCurrentPosition();
-      Vector3 feetPosition = _ball.GetFeetPosition();
+      Vector3 feetPosition = GetFeetPosition();
+      Vector3 facingDirection = GetFacingDirection();
       float ballRadius = _ball.GetRadius();
 
-      Vector3 feetBallDirection = feetPosition - ballPosition;
-
+      // TODO: make this value more realistic
       float sweetSpotRadius = .5f;
-      float sweetSpotTolarence = 0.25f; // TODO: make this value more realistic
-      float playerBallMagDiff = feetBallDirection.magnitude + ballRadius + transform.lossyScale.x/2;
+      float sweetSpotTolarence = 0.6f; 
 
-      Debug.Log($"playerBallMagDiff = {playerBallMagDiff}");
+      Vector3 feetBallVector = ballPosition - feetPosition;
+      float playerBallMagDiff = feetBallVector.magnitude - ballRadius;
 
       // apply a force proportional to the distance of the player
       // TODO: eventually make a sweet spot where the force it's maximum at a certain
@@ -162,9 +156,8 @@ public class PlayerController : MonoBehaviour
       if (playerBallMagDiff >= (sweetSpotRadius-sweetSpotTolarence) &&
           playerBallMagDiff <= (sweetSpotRadius+sweetSpotTolarence))
       {
-        Vector3 kickingForce = _mousePosition.normalized * playerBallMagDiff * _kickingForce;
+        Vector3 kickingForce = facingDirection.normalized * playerBallMagDiff * _kickingForce * ( (float) Math.Cos(facingDirection.normalized.x));
         KickBall(kickingForce);
-        Debug.Log("Should kick");
       }
     }
   }
@@ -175,8 +168,6 @@ public class PlayerController : MonoBehaviour
     // check if the player it's kicking the ball
     if (_canKick && cooldown.Seconds > _kickCoolDownSeconds)
     {
-      // TODO: apply force to the ball and update _isKicking
-      Debug.Log("HIT THE BALL");
       _ball.ApplyHit(kickingForce);
       _canKick = false;
       _kickedTime = DateTime.Now;
