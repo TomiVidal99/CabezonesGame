@@ -3,7 +3,22 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ball
+  - HittingBoundingBox
+  - PlayerBody
+  - PlayerHand
+  - PlayerHead
+  - Ground
+  - AbilitiesDisplay
+  - HUD
+  - Score
+  - Pole Goal Right
+  - Pole Goal Left
+  - GlobalInformation
+  - Main
+  - KickOrigin
+  - Eye
   layers:
   - Default
   - TransparentFX

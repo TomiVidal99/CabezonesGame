@@ -8,6 +8,16 @@ Just a simple game made with Unity and C#, to learn in depth both of these techn
 
 The game it's about scoring a goal to the other player (the it's two player based and it's required to be played in the same keyboard), when the time's up the player with the most scored goals wins, if both players have the same score then it's a golden goal match.
 
+## TODO
+
+- [ ] Improve animation handling in the HUD (be able to change the delay for different events).
+- [ ] Add different types of balls (baseball, hockey, rugby).
+- [ ] Add two hitting modes: Hand and Feet. (When setting different playing modes or maps could enable/disable one or the other).
+- [ ] Pause game and reset ball position when the ball it's still for a while.
+- [ ] Make animation when the user scores.
+- [ ] Setup powerups and abilities.
+- [ ] Make the multiplayer.
+
 ## Getting Started
 
 ### Dependencies
